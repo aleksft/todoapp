@@ -11,12 +11,14 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title, id: :element_title %>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text"><%= form.label :title %></span>
+    </div>
+    <%= form.text_field :title, id: :element_title, class: "form-control" %>
   </div>
 
-  <div class="actions">
+  <div class="btn btn-success">
     <%= form.submit %>
   </div>
 <% end %>

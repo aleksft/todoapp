@@ -1,0 +1,26 @@
+body {
+  font-size: 16px !important;
+  line-height: 20px !important;
+}
+
+p, ol, ul, td {
+  font-size: 16px !important;
+  line-height: 20px !important;
+}
+
+th, td { padding: 0 15px 5px 0; }
+
+.option-icon:hover { text-decoration: none; }
+
+input[type=submit] {
+  background-color: inherit;
+  border: 0px;
+  font-size: 18px;
+}
+
+.sign-out-button {
+  float: right;
+  margin-top: 2.5px;
+}
+
+footer { padding-top: 10px; }

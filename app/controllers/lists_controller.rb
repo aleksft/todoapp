@@ -4,12 +4,13 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
-    @lists = List.all
+    @lists = List.where('lists.user_id = ?', current_user.id)
   end
 
   # GET /lists/1
   # GET /lists/1.json
   def show
+    @elements = Element.where('elements.list_id = ?', params[:id])
   end
 
   # GET /lists/new
@@ -25,6 +26,7 @@ class ListsController < ApplicationController
   # POST /lists.json
   def create
     @list = List.new(list_params)
+    @list.user_id = current_user.id
 
     respond_to do |format|
       if @list.save
