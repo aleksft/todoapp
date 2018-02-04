@@ -1,16 +1,44 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_list, only: [:show, :show_shared_list, :show_all_list, :edit, :update, :destroy]
+  before_action :set_elements, only: [:show, :show_shared_list, :show_all_list]
 
   # GET /lists
   # GET /lists.json
   def index
+    @type_view = 'index'
     @lists = List.where('lists.user_id = ?', current_user.id)
+  end
+
+  def shared_lists
+    @type_view = 'shared'
+    @lists = List.where('lists.user_id = ?', current_user.id)
+
+    render 'index'
+  end
+
+  def all_lists
+    @type_view = 'all'
+    @lists = List.where('lists.user_id = ?', current_user.id)
+
+    render 'index'
   end
 
   # GET /lists/1
   # GET /lists/1.json
   def show
-    @elements = Element.where('elements.list_id = ?', params[:id])
+    @type_view = 'mine'
+  end
+
+  def show_shared_list
+    @type_view = 'shared'
+
+    render 'show'
+  end
+
+  def show_all_list
+    @type_view = 'all'
+
+    render 'show'
   end
 
   # GET /lists/new
@@ -67,6 +95,10 @@ class ListsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_list
       @list = List.find(params[:id])
+    end
+
+    def set_elements
+      @elements = @list.elements
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

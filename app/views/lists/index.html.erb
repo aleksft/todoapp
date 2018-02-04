@@ -1,24 +1,42 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Lists</h1>
+<h1>
+  <% if @type_view == 'index' %>
+    My lists
+  <% elsif @type_view == 'shared' %>
+    Shared with me
+  <% elsif @type_view == 'all' %>
+    All my lists
+  <% end %>
+</h1>
 
 <table>
   <thead>
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Edit</th>
-      <th>Delete</th>
+      <% if @type_view == 'index' %>
+        <th>Edit</th>
+        <th>Delete</th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @lists.each do |list| %>
       <tr>
-        <td><%= link_to list.title, list %></td>
+        <% if @type_view == 'index' %>
+          <td><%= link_to list.title, list %></td>
+        <% elsif @type_view == 'shared' %>
+          <td><%= link_to list.title, shared_list_path(list) %></td>
+        <% elsif @type_view == 'all' %>
+          <td><%= link_to list.title, all_list_path(list) %></td>
+        <% end %>
         <td><%= list.description %></td>
-        <td><%= link_to '', edit_list_path(list), class: "fa fa-pencil fa-2x option-icon option-edit" %></td>
-        <td><%= link_to '', list, method: :delete, data: { confirm: 'Are you sure?' }, class: "fa fa-trash-o fa-2x option-icon option-delete" %></td>
+        <% if @type_view == 'index' %>
+          <td><%= link_to '', edit_list_path(list), class: "fa fa-pencil fa-2x option-icon option-edit" %></td>
+          <td><%= link_to '', list, method: :delete, data: { confirm: 'Are you sure?' }, class: "fa fa-trash-o fa-2x option-icon option-delete" %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +44,6 @@
 
 <br>
 
-<%= link_to 'New List', new_list_path, class: "btn btn-primary btn-lg btn-xlarge" %>
+<% if @type_view == 'index' %>
+  <%= link_to 'New List', new_list_path, class: "btn btn-primary btn-lg btn-xlarge" %>
+<% end %>

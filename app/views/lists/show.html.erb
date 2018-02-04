@@ -8,24 +8,28 @@
 
 <h2>Elements</h2>
 
-<%= form_tag elements_path, remote: true, method: :post do %>
-  <%= text_field_tag :list_id, @list.id, class: "form-control", :type => 'hidden' %>
-  <div class="input-group mb-3">
-    <%= text_field_tag 'element[title]', '', class: "form-control", :placeholder => "Element title", :required => true %>
-    <div class="input-group-append">
-      <%= button_tag(type: :submit, class: 'btn btn-outline-secondary') do %>
-        Add element
-      <% end %>
+<% if @type_view == 'mine' %>
+  <%= form_tag elements_path, remote: true, method: :post do %>
+    <%= text_field_tag :list_id, @list.id, class: "form-control", :type => 'hidden' %>
+    <div class="input-group mb-3">
+      <%= text_field_tag 'element[title]', '', class: "form-control", :placeholder => "Element title", :required => true %>
+      <div class="input-group-append">
+        <%= button_tag(type: :submit, class: 'btn btn-outline-secondary') do %>
+          Add element
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
 
 <table>
   <thead>
     <tr>
       <th>Element</th>
-      <th>Edit</th>
-      <th>Delete</th>
+      <% if @type_view == 'mine' %>
+        <th>Edit</th>
+        <th>Delete</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -33,12 +37,23 @@
     <% @elements.each do |element| %>
       <tr>
         <td><%= element.title %></td>
-        <td><%= link_to '', edit_element_path(element), class: "fa fa-pencil fa-2x option-icon option-edit" %></td>
-        <td><%= link_to '', element, method: :delete, data: { confirm: 'Are you sure?' }, class: "fa fa-trash-o fa-2x option-icon option-delete" %></td>
+        <% if @type_view == 'mine' %>
+          <td><%= link_to '', edit_element_path(element), class: "fa fa-pencil fa-2x option-icon option-edit" %></td>
+          <td><%= link_to '', element, method: :delete, data: { confirm: 'Are you sure?' }, class: "fa fa-trash-o fa-2x option-icon option-delete" %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to 'Edit', edit_list_path(@list), class: "btn btn-primary btn-lg btn-xlarge" %>
-<%= link_to 'Back', lists_path, class: "btn btn-primary btn-lg btn-xlarge" %>
+<% if @type_view == 'mine' %>
+  <%= link_to 'Edit', edit_list_path(@list), class: "btn btn-primary btn-lg btn-xlarge" %>
+<% end %>
+
+<% if @type_view == 'mine' %>
+  <%= link_to 'Back', lists_path, class: "btn btn-primary btn-lg btn-xlarge" %>
+<% elsif @type_view == 'shared' %>
+  <%= link_to 'Back', shared_lists_path, class: "btn btn-primary btn-lg btn-xlarge" %>
+<% elsif @type_view == 'all' %>
+  <%= link_to 'Back', all_lists_path, class: "btn btn-primary btn-lg btn-xlarge" %>
+<% end %>
