@@ -52,7 +52,9 @@
             <li><%= link_to "Shared with me", "/path2"  %></li>
             <li><%= link_to "All my lists", "/path2"  %></li>
           </ul>
-          <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-primary btn-lg btn-xlarge sign-out-button"  %>
+          <% if current_user %>
+            <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-primary btn-lg btn-xlarge sign-out-button" %>
+          <% end %>
         </div>
       </div>
     </div>
