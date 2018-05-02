@@ -60,7 +60,6 @@ end
 group :production do
   gem 'pg', '~> 0.11'
   gem 'rails_12factor'
-  gem 'pg', '~> 0.11'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
